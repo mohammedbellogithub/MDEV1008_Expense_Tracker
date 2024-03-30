@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Header Title -->
+    <TextView
+        android:id="@+id/profile_header_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_profile"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:padding="20dp"/>
+
+    <!-- User Email -->
+    <TextView
+        android:id="@+id/profile_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_example_com"
+        android:textSize="16sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/profile_header_title"
+        app:drawableStartCompat="@drawable/baseline_person_24"
+        app:drawableEndCompat="@drawable/baseline_edit_24"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"/>
+
+    <!-- Modal/Card -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_email"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp">
+        <LinearLayout
+            android:id="@+id/modal_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/profile_email"
+            android:padding="30dp">
+
+            <!-- Account with icon -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="15dp">
+
+                <!-- Account with icon -->
+                <TextView
+                    android:id="@+id/account_profile_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="8dp"
+                    android:text="@string/account"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/baseline_account_balance_24" />
+
+            </LinearLayout>
+
+            <!-- Setting with icon -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="16dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="8dp"
+                    android:text="@string/settings"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/baseline_settings_24"
+                />
+            </LinearLayout>
+
+            <!-- Export data with icon -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="16dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="8dp"
+                    android:text="@string/export_data"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/baseline_upload_24"
+                    />
+            </LinearLayout>
+
+            <!-- Logout with icon -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="16dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="8dp"
+                    android:text="@string/logout"
+                    android:textSize="18sp"
+                    android:id="@+id/logout"
+                    android:textColor="@color/red"
+                    app:drawableStartCompat="@drawable/baseline_logout_24"
+                />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

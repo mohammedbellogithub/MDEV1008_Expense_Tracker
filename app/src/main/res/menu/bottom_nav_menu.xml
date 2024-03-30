@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeNavId"
+        android:icon="@drawable/baseline_home_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/home"
+        />
+    <item
+        android:id="@+id/accountNavId"
+        android:icon="@drawable/baseline_account_balance_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/account"/>
+    <item
+        android:id="@+id/addNavId"
+        android:icon="@drawable/baseline_add_circle_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/add"/>
+    <item
+        android:id="@+id/reportsNavId"
+        android:icon="@drawable/baseline_pie_chart_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/reports" />
+    <item
+        android:id="@+id/profileNavId"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/profile" />
+</menu>

@@ -37,9 +37,9 @@
     <string name="login">Login</string>
     <string name="passwordPlaceholder">Password</string>
     <string name="logoAlt">Logo</string>
-    <string name="signup">Don\'t have an account? Sign Up</string>
+    <string name="signup">Sign Up</string>
     <string name="signupBtn">Sign up</string>
-    <string name="LoginInto">Already have an account? Login</string>
+    <string name="LoginIntro">Already have an account? </string>
     <string name="defaultDescription">defaultDescription</string>
     <string name="user_profile">User Profile</string>
     <string name="user_example_com">user@example.com</string>
@@ -67,4 +67,8 @@
     <string name="update">Update</string>
     <string name="transaction_details">Transaction Details</string>
     <string name="add_transaction">Add Transaction</string>
+    <string name="proposeSignUp">Don\'t have an account? </string>
+    <string name="app_description">Effortlessly manage your finances and stay on top of your spending with ease.</string>
+    <string name="courseTitle">MDEV 1008</string>
+    <string name="group_4">Group 4</string>
 </resources>

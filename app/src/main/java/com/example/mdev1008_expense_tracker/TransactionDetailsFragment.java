@@ -1,6 +1,7 @@
 package com.example.mdev1008_expense_tracker;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,9 +15,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.UUID;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +24,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.mdev1008_expense_tracker.databinding.FragmentTransactionDetailsBinding;
@@ -94,11 +91,13 @@ public class TransactionDetailsFragment extends Fragment {
         expenseRadioButton = view.findViewById(R.id.expense_radio_button);
         Button saveButton = view.findViewById(R.id.update);
         ImageButton backButton = view.findViewById(R.id.backButton);
+        ImageButton deleteButton = view.findViewById((R.id.delete_transaction));
         progressBar = view.findViewById(R.id.progressBar);
 
         // Set click listeners
         saveButton.setOnClickListener(v -> updateTransaction());
         backButton.setOnClickListener(v -> navigateBack());
+        deleteButton.setOnClickListener(v -> showDeleteConfirmationDialog());
         return view;
     }
 
@@ -185,8 +184,26 @@ public class TransactionDetailsFragment extends Fragment {
         } else {
             progressBar.setVisibility(View.GONE);
         }
+    }
 
+    private void showDeleteConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Confirm Deletion")
+                .setMessage("Are you sure you want to delete this transaction?")
+                .setPositiveButton("Yes", (dialog, which) -> deleteTransaction())
+                .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
 
+    private void deleteTransaction(){
+        Task<Boolean> request =  TransactionModel.deleteTransaction(id, getActivity());
+        if (request != null) {
+            request.addOnCompleteListener(task -> {
+                if (task.isSuccessful() && task.getResult()) {
+                    navigateBack();
+                }
+            });
+        }
     }
 
     // Method to navigate back to the previous fragment

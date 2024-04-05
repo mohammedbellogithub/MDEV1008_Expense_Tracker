@@ -150,5 +150,28 @@ public class FireBaseHelper {
         return tcs.getTask();
     }
 
+    // Delete document asynchronously
+    public Task<Boolean> deleteAsync(String collectionPath, String entityId, Context context) {
+        // Create a TaskCompletionSource to handle the asynchronous task
+        TaskCompletionSource<Boolean> tcs = new TaskCompletionSource<>();
+
+        // Access FireStore collection and document, then delete the document
+        db.collection(collectionPath)
+                .document(entityId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    // Document deletion successful
+                    Toast.makeText(context, collectionPath + " deleted successfully!", Toast.LENGTH_SHORT).show();
+                    tcs.setResult(true);
+                })
+                .addOnFailureListener(e -> {
+                    // Document deletion failed
+                    Toast.makeText(context, "Failed to delete " + collectionPath + ". Please try again.", Toast.LENGTH_SHORT).show();
+                    tcs.setResult(false);
+                });
+
+        // Return the task
+        return tcs.getTask();
+    }
 }
 

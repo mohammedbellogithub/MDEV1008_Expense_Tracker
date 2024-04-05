@@ -119,6 +119,12 @@ public class TransactionModel {
     public void setType(String type) {
         this.type = type;
     }
+
+    public static Task<Boolean> deleteTransaction(String transactionId, Context context)
+    {
+        FireBaseHelper fireStoreHelper = FireBaseHelper.getInstance();
+        return fireStoreHelper.deleteAsync("transactions", transactionId, context);
+    }
 }
 
 

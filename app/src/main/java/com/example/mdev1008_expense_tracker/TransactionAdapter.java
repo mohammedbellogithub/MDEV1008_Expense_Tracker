@@ -23,6 +23,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
     private OnTransactionClickListener mListener;
 
+    // Constructor
     public TransactionAdapter(Context context){
         transactionModelList = new ArrayList<>();
     }
@@ -30,12 +31,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         transactionModelList = new ArrayList<>();
         this.mListener = listener;
     }
+
+    // Method to set new data to the adapter and refresh the UI
     @SuppressLint("NotifyDataSetChanged")
     public void setData(List<TransactionModel> newData) {
         transactionModelList.clear();
         transactionModelList.addAll(newData);
         notifyDataSetChanged();
     }
+
+    // onCreateViewHolder: Inflate the layout for each item of the RecyclerView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,6 +48,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return new MyViewHolder(view);
     }
 
+    // onBindViewHolder: Bind data to the views of each RecyclerView item
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
@@ -61,6 +67,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             holder.amount.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.green));
         }
 
+        // Set onClickListener for each item
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,11 +79,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     }
 
 
+    // getItemCount: Return the size of the data list
     @Override
     public int getItemCount() {
        return transactionModelList.size();
     }
 
+    // ViewHolder class to hold the views of each item
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         private final TextView note,category,amount,date;
 

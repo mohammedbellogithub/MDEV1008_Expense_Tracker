@@ -34,6 +34,7 @@ import com.google.android.gms.tasks.Task;
 
 public class TransactionDetailsFragment extends Fragment {
 
+    // Declare variables
     private FragmentTransactionDetailsBinding binding;
     private String category, note, type, date, id;
     private double amount;
@@ -42,8 +43,11 @@ public class TransactionDetailsFragment extends Fragment {
     private RadioButton expenseRadioButton, incomeRadioButton;
     ProgressBar progressBar;
 
+    // Default constructor
     public TransactionDetailsFragment() {
     }
+
+    // Static method to create a new instance of TransactionDetailsFragment with transaction data
     public static TransactionDetailsFragment newInstance(TransactionModel transaction) {
         TransactionDetailsFragment fragment = new TransactionDetailsFragment();
         Bundle args = new Bundle();
@@ -58,6 +62,7 @@ public class TransactionDetailsFragment extends Fragment {
         return fragment;
     }
 
+    // Lifecycle method onCreate
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,13 +76,16 @@ public class TransactionDetailsFragment extends Fragment {
         }
     }
 
+    // Lifecycle method onCreateView
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         binding = FragmentTransactionDetailsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         if (getArguments() != null) {
             bindTransactionToView(id, amount, category, note, type, date);
         }
+        // Bind views
         amountEditText = view.findViewById(R.id.amount);
         noteEditText = view.findViewById(R.id.note);
         categoryEditText = view.findViewById(R.id.category);
@@ -85,16 +93,19 @@ public class TransactionDetailsFragment extends Fragment {
         incomeRadioButton = view.findViewById(R.id.income_radio_button);
         expenseRadioButton = view.findViewById(R.id.expense_radio_button);
         Button saveButton = view.findViewById(R.id.update);
-        progressBar = view.findViewById(R.id.progressBar);
-        saveButton.setOnClickListener(v -> updateTransaction());
-
         ImageButton backButton = view.findViewById(R.id.backButton);
+        progressBar = view.findViewById(R.id.progressBar);
+
+        // Set click listeners
+        saveButton.setOnClickListener(v -> updateTransaction());
         backButton.setOnClickListener(v -> navigateBack());
         return view;
     }
 
+    // Method to bind transaction data to views
     @SuppressLint("SimpleDateFormat")
     private void bindTransactionToView(String id, double amount, String category, String note, String type, String date) {
+        // Bind data to views
         binding.amount.setText(String.valueOf(amount));
         binding.category.setText(category);
         binding.note.setText(note);
@@ -127,8 +138,10 @@ public class TransactionDetailsFragment extends Fragment {
         );
     }
 
+    // Method to validate form data and create a TransactionModel object
     @Nullable
     private TransactionModel validateForm() {
+        // Get form data
         String amountText = amountEditText.getText().toString();
         if (amountText.isEmpty()) {
             Toast.makeText(getActivity(), "Amount is required", Toast.LENGTH_SHORT).show();
@@ -151,8 +164,11 @@ public class TransactionDetailsFragment extends Fragment {
             return null;
         }
 
+        // Create and return a new TransactionModel object
         return new TransactionModel(id, amount, note, category, date, type);
     }
+
+    // Method to update the transaction
     private void updateTransaction() {
         progressBar.setVisibility(View.VISIBLE);
         TransactionModel model = validateForm();
@@ -173,6 +189,7 @@ public class TransactionDetailsFragment extends Fragment {
 
     }
 
+    // Method to navigate back to the previous fragment
     private void navigateBack() {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.popBackStack(); // Pop the back stack

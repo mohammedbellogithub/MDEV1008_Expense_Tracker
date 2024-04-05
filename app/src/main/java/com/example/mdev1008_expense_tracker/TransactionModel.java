@@ -44,8 +44,13 @@ public class TransactionModel {
         return fireStoreHelper.addAsync("transactions", this, context);
     }
 
+    //update transaction
     public Task<Boolean> updateAsync(Context context){
+
+        // Get an instance of FireBaseHelper
         FireBaseHelper fireStoreHelper = FireBaseHelper.getInstance();
+
+        // Create a map to store updates
         Map<String, Object> updates = new HashMap<>();
         updates.put("id", this.id);
         updates.put("amount", this.amount);
@@ -54,11 +59,7 @@ public class TransactionModel {
         updates.put("type", this.type);
         updates.put("date", this.date);
 
-        // Log the updates map values
-        for (Map.Entry<String, Object> entry : updates.entrySet()) {
-            Log.d("UPDATE_ASYNC", "Key: " + entry.getKey() + ", Value: " + entry.getValue());
-        }
-
+        // Call the updateAsync method of FireBaseHelper and return the result
         return fireStoreHelper.updateAsync("transactions", this.id, updates, context);
     }
 

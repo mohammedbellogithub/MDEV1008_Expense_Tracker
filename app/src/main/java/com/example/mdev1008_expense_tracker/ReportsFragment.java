@@ -32,14 +32,18 @@ public class ReportsFragment extends Fragment implements TransactionAdapter.OnTr
     private FireBaseHelper fireBaseHelper;
     private FragmentReportsBinding binding;
     private PieChart pieChart;
+
+    // Callback interface to handle transaction loading results
     private interface TransactionsCallback {
         void onTransactionsLoaded(List<TransactionModel> transactions);
         void onFailure(String errorMessage);
     }
 
+    // Default constructor
     public ReportsFragment() {
     }
 
+    // Static method to create a new instance of the fragment
     public static ReportsFragment newInstance(String param1, String param2) {
         ReportsFragment fragment = new ReportsFragment();
         Bundle args = new Bundle();
@@ -56,12 +60,17 @@ public class ReportsFragment extends Fragment implements TransactionAdapter.OnTr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         binding = FragmentReportsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        // Initialize RecyclerView for displaying transactions
         RecyclerView recyclerView = view.findViewById(R.id.reports_transactions);
         TransactionAdapter adapter = new TransactionAdapter(getContext(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Fetch transactions asynchronously and update UI
         getTransactionsAsync(new TransactionsCallback() {
             @Override
             public void onTransactionsLoaded(List<TransactionModel> transactions) {
@@ -76,6 +85,7 @@ public class ReportsFragment extends Fragment implements TransactionAdapter.OnTr
         return view;
     }
 
+    // Fetch transactions asynchronously
     private void getTransactionsAsync(TransactionsCallback callback)  {
         fireBaseHelper.getAllAsync("transactions")
                 .addOnSuccessListener(callback::onTransactionsLoaded)
@@ -84,6 +94,7 @@ public class ReportsFragment extends Fragment implements TransactionAdapter.OnTr
                 });
     }
 
+    // Set up the pie chart with income and expense data
     private void setupPieChart(List<TransactionModel> transactions) {
         // Calculate total income and expense from transactions
         double totalIncome = 0;
@@ -96,6 +107,7 @@ public class ReportsFragment extends Fragment implements TransactionAdapter.OnTr
             }
         }
 
+        // Create pie chart entries
         List<PieEntry> entries = new ArrayList<>();
         List<Integer> colorList = new ArrayList<>();
         if (totalExpense != 0 ){
@@ -107,6 +119,7 @@ public class ReportsFragment extends Fragment implements TransactionAdapter.OnTr
             colorList.add(getResources().getColor(R.color.green));
         }
 
+        // Configure pie chart dataset
         PieDataSet dataSet = new PieDataSet(entries, "");
         dataSet.setColors(colorList);
         dataSet.setValueTextSize(12f);
@@ -114,16 +127,20 @@ public class ReportsFragment extends Fragment implements TransactionAdapter.OnTr
         dataSet.setValueFormatter(new MyValueFormatter());
         dataSet.setSliceSpace(3f);
 
+        // Create pie chart data and apply to the chart
         PieData data = new PieData(dataSet);
         binding.reportPieChart.setData(data);
         binding.reportPieChart.getDescription().setEnabled(false);
         binding.reportPieChart.invalidate();
     }
 
+    // Handle transaction item click
     @Override
     public void onTransactionClick(TransactionModel transaction) {
         navigateToDetailsFragment(transaction);
     }
+
+    // Navigate to transaction details fragment
     private void navigateToDetailsFragment(TransactionModel transaction) {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -133,6 +150,7 @@ public class ReportsFragment extends Fragment implements TransactionAdapter.OnTr
         fragmentTransaction.commit();
     }
 
+    // Custom value formatter for the pie chart
     private static class MyValueFormatter extends ValueFormatter {
         @Override
         public String getFormattedValue(float value) {

@@ -23,18 +23,27 @@ tools:context=".TransactionDetailsFragment">
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_arrow_back_24"
-            android:layout_marginEnd="25dp"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="@string/defaultDescription"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textColor="@color/white"
             android:textStyle="bold"
+            android:textAlignment="center"
             android:fontFamily="sans-serif-condensed"
             android:textSize="20sp"
             android:text="@string/transaction_details"/>
+
+        <ImageButton
+            android:id="@+id/delete_transaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/baseline_delete_24"
+            android:contentDescription="@string/defaultDescription" />
     </LinearLayout>
 
     <androidx.cardview.widget.CardView

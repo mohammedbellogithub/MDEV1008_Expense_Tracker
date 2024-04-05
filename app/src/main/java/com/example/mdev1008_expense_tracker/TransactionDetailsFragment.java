@@ -39,7 +39,6 @@ public class TransactionDetailsFragment extends Fragment {
     private double amount;
     private DatePicker datePicker;
     private EditText amountEditText, noteEditText, categoryEditText;
-    //private RadioGroup radioGroup;
     private RadioButton expenseRadioButton, incomeRadioButton;
     ProgressBar progressBar;
 
@@ -83,7 +82,6 @@ public class TransactionDetailsFragment extends Fragment {
         noteEditText = view.findViewById(R.id.note);
         categoryEditText = view.findViewById(R.id.category);
         datePicker = view.findViewById(R.id.date_picker);
-        //radioGroup = view.findViewById(R.id.add_transaction_radioGroup);
         incomeRadioButton = view.findViewById(R.id.income_radio_button);
         expenseRadioButton = view.findViewById(R.id.expense_radio_button);
         Button saveButton = view.findViewById(R.id.update);

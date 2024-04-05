@@ -2,9 +2,7 @@ package com.example.mdev1008_expense_tracker;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.google.android.gms.tasks.Task;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

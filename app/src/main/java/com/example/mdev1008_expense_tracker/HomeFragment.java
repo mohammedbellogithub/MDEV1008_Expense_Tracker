@@ -1,67 +1,70 @@
 package com.example.mdev1008_expense_tracker;
 
-import android.os.Bundle;
 
+// Import statements
+import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-
+// HomeFragment class
 public class HomeFragment extends Fragment implements TransactionAdapter.OnTransactionClickListener {
 
-    private RecyclerView recyclerView;
+    // Member variables
     private TransactionAdapter adapter;
     private FireBaseHelper fireBaseHelper;
-    private CalendarView calendarView;
     private Calendar calendar;
 
+    // Default constructor
     public HomeFragment() {
         // Required empty public constructor
     }
 
-   public static HomeFragment newInstance(String param1, String param2) {
+    // Static method to create a new instance of HomeFragment
+    public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
+    // onCreate method
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fireBaseHelper = FireBaseHelper.getInstance();
     }
 
+    // onCreateView method
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
-        recyclerView = view.findViewById(R.id.transactionRecyclerView);
-        calendarView = view.findViewById(R.id.calenderId);
+
+        // Initialize adapter and views
+        RecyclerView recyclerView = view.findViewById(R.id.transactionRecyclerView);
+        CalendarView calendarView = view.findViewById(R.id.calenderId);
 
         adapter = new TransactionAdapter(getContext(),this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // Initialize calendar instance
         calendar = Calendar.getInstance();
 
+        // Set listener for calendar view date change
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -70,22 +73,23 @@ public class HomeFragment extends Fragment implements TransactionAdapter.OnTrans
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                String formattedDate = dateFormat.format(calendar.getTime());
-
                 // Fetch transactions for the updated date
                 getTransactionsByDateAsync();
             }
         });
 
+        // Fetch transactions for the initial date
         getTransactionsByDateAsync();
         return view;
     }
+
+    // Method to handle transaction item click
     @Override
     public void onTransactionClick(TransactionModel transaction) {
         navigateToDetailsFragment(transaction);
     }
 
+    // Method to navigate to transaction details fragment
     private void navigateToDetailsFragment(TransactionModel transaction) {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -96,13 +100,7 @@ public class HomeFragment extends Fragment implements TransactionAdapter.OnTrans
     }
 
 
-    private void getTransactionsAsync() {
-        fireBaseHelper.getAllAsync("transactions").addOnSuccessListener(transactions -> {
-            adapter.setData(transactions);
-        }).addOnFailureListener(e -> {
-            Toast.makeText(getContext(), "Failed to fetch transactions: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        });
-    }
+    // Method to fetch transactions by date asynchronously
     private void getTransactionsByDateAsync() {
         fireBaseHelper.getByParamAsync("transactions", "date", getDate()).addOnSuccessListener(transactions -> {
             adapter.setData(transactions);
@@ -111,6 +109,7 @@ public class HomeFragment extends Fragment implements TransactionAdapter.OnTrans
         });
     }
 
+    // Method to get formatted date
     private String getDate()
     {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
